@@ -1,0 +1,13 @@
+.menu {
+  height: 100%;
+
+  a, a:visited {
+    text-decoration: none;
+    transition: all .3s;
+    
+    &:hover {
+      background: rgb(236, 236, 236);
+      // transition: all .3s;
+    }
+  }
+}
