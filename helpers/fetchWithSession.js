@@ -1,6 +1,6 @@
 import { apiHost, sessionKey } from "../config"
 export const fetchWithSession = async (url, req) => {
-  const session = req.headers[sessionKey];
+  const session = req.cookies[sessionKey];
   const res = await fetch(apiHost + url, {
     headers: {
       [sessionKey]: session

@@ -1,0 +1,13 @@
+.projects {
+  padding: 20px 0;
+  
+  .list {
+
+    .item {
+
+      &:hover {
+        background: rgb(224, 224, 224);
+      }
+    }
+  }
+}

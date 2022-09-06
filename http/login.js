@@ -1,13 +1,8 @@
 import { getAxios } from "./axios"
 import { api } from "../config"
 import HttpError from "./HttpError";
+import { HttpBase } from "./HttpBase";
 
-export const httpLogin = async (data) => {
-  try {
-    const response = await getAxios().post("/api/auth/login", data);
-    console.log(response.headers)
-    return response.data;
-  } catch(err) {
-    return new HttpError(err);
-  }
+export const httpLogin = (data) => {
+  return HttpBase(getAxios().post("/api/auth/login", data));
 }

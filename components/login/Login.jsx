@@ -1,6 +1,7 @@
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
+import { setAxios } from "../../http/axios";
 import HttpError from "../../http/HttpError";
 import { httpLogin } from "../../http/login";
 import { useAuthContext } from "../../store/authContext";
@@ -23,7 +24,9 @@ Login() {
     }
 
     const data = response.data;
-    authContext.setTokenHandler(data.session)
+    authContext.setTokenHandler(data.session);
+    window.localStorage.setItem("session", data.session);
+    setAxios(data.session);
     router.push("/dashboard");
   }
 

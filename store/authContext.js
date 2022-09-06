@@ -1,4 +1,5 @@
-import { createContext, useCallback, useContext, useMemo, useState } from "react";
+import { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
+import { setAxios } from "../http/axios";
 
 const context = createContext();
 
@@ -14,6 +15,14 @@ export const AuthProvider = ({
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [token, setToken] = useState(null);
   const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const session = window.localStorage.getItem("session");
+    if (session) {
+      setAxios(session);
+    }
+  }, []);
 
   const setIsLoggedInHandler = useCallback((_isLoggedIn) => {
     setIsLoggedIn(_isLoggedIn);
