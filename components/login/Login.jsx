@@ -1,35 +1,52 @@
+import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
+import HttpError from "../../http/HttpError";
 import { httpLogin } from "../../http/login";
+import { useAuthContext } from "../../store/authContext";
 import Button from "../shared/Button";
-import PasswordInput from "../shared/PasswordInput";
-import TextInput from "../shared/TextInput";
+import Input from "../shared/Input";
 export default function
 Login() {
+  const router = useRouter();
+  const authContext = useAuthContext();
   const { register, handleSubmit, formState: { errors }} = useForm();
   
-  useEffect(() => {
-    httpLogin();
-  }, [])
+  const onSubmit = async (formData) => {
+    const response = await httpLogin(formData);
+    if (response instanceof HttpError) {
+      if (response.statusCode === 400) {
+
+        
+      }
+      return;
+    }
+
+    const data = response.data;
+    authContext.setTokenHandler(data.session)
+    router.push("/dashboard");
+  }
 
   return (<>
     <div className={`d-flex align-items-center justify-content-center vh-100`}>
       <div className={`rounded-3  p-3 w-25 bg-white pt-3 shadow`}>
-        <form>
-          <TextInput 
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <Input 
           label="Username" 
           name="username" 
           registerFunc={register} 
           isRequired={true}/>
 
-          <PasswordInput 
+          <Input 
           label="Password" 
           name="password" 
+          type="password"
           registerFunc={register} 
           isRequired={true}/>
 
           <Button 
           label="Login"
+          isSubmit={true}
           />
         </form>  
       </div>      

@@ -12,10 +12,15 @@ export const AuthProvider = ({
   children
 }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [token, setToken] = useState(null);
   const [user, setUser] = useState(null);
 
   const setIsLoggedInHandler = useCallback((_isLoggedIn) => {
     setIsLoggedIn(_isLoggedIn);
+  }, []);
+
+  const setTokenHandler = useCallback((_token) => {
+    setToken(_token);
   }, []);
 
   const setUserHandler = useCallback((_user) => {
@@ -25,6 +30,8 @@ export const AuthProvider = ({
   const value = useMemo(() => ({
     isLoggedIn, 
     setIsLoggedInHandler,
+    token,
+    setTokenHandler,
     user,
     setUserHandler
   }), [
