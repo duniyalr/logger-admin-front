@@ -18,6 +18,7 @@ export const AuthProvider = ({
 
   useEffect(() => {
     if (typeof window === "undefined") return;
+    console.log("setting session")
     const session = window.localStorage.getItem("session");
     if (session) {
       setAxios(session);

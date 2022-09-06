@@ -3,6 +3,8 @@ Button({
   label,
   onClick,
   isSubmit,
+  Icon,
+  color,
   className
 }) {
   if (isSubmit) {
@@ -17,7 +19,8 @@ Button({
     </>)
   }
   return <>
-    <button className={`${className} btn btn-primary mt-3`} onClick={onClick} style={{fontSize: "1.1rem"}}>
+    <button className={`${className} d-flex align-items-center btn ${color} mt-3`} onClick={onClick} style={{fontSize: "1.1rem"}}>
+      <Icon className="me-1"/>
       {label}
     </button>
   </>

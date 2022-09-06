@@ -6,6 +6,7 @@ import { FaPlus } from "react-icons/fa";
 import CommonContainer from "../shared/CommonContainer";
 import LinkButton from "../shared/LinkButton";
 import { useState } from "react";
+
 export default function
 Projects({
   initialData,
