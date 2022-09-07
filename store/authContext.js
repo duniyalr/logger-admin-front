@@ -46,6 +46,8 @@ export const AuthProvider = ({
   }), [
     isLoggedIn, 
     setIsLoggedInHandler,
+    token,
+    setTokenHandler,
     user,
     setUserHandler
   ])

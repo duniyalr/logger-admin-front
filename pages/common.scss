@@ -24,3 +24,10 @@ $baseColor: rgb(23, 155, 155);
 .bd-base {
   background-color: $baseColor;
 }
+
+hr {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  border: 0;
+  border-top: 1px solid rgba(0, 0, 0, 0.712);
+}

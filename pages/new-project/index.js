@@ -6,3 +6,11 @@ NewProjectPage() {
     <NewProject />
   </>)
 }
+
+export const getStaticProps = () => {
+  return {
+    props: {
+      protected: true
+    }
+  }
+}

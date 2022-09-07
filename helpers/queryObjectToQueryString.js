@@ -1,3 +1,4 @@
 export const qoToqs = (qo) => {
-  return Object.entries(qo).map(([key, value]) => `${key}=${value}`).join("&");
+  const queryString = Object.entries(qo).map(([key, value]) => `${key}=${value}`).join("&");
+  return queryString ? "?" + queryString : "";
 }

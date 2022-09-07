@@ -27,8 +27,7 @@ Login() {
     const data = response.data;
     authContext.setTokenHandler(data.session);
     window.localStorage.setItem("session", data.session);
-    setAxios(data.session);
-    router.push("/dashboard");
+    window.location = router.query.from
   }
 
   return (<>

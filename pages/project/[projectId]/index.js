@@ -15,6 +15,7 @@ export const getServerSideProps = async ({params, req, query}) => {
   console.log(data)
   return {
     props: {
+      protected: true,
       initialData: data,
       initialRequest: {
         key: requestKey,

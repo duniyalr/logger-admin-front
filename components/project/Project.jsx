@@ -39,6 +39,7 @@ Project({
           color="text-danger"
         />
       </div>
+      <hr />
       <div className="row">
         <div className="container-fluid">
           <div className="row">

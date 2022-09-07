@@ -34,6 +34,7 @@ Projects({
           href={"/new-project"}
         />
       </div>
+      <hr />
       <div className={`${s.list} row`}>
         <div className="container-fluid">
           {items.map(item => (

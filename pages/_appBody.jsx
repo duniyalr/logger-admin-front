@@ -14,24 +14,31 @@ AppBody({
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+    console.log("useEffect from _appBody");
     (async () => {
+      setIsLoading(true);
       const response = await httpWho()
       setIsLoading(false);
-      if (response  instanceof HttpError) {
+      console.log("dani", response)
+      if (response instanceof HttpError) {
+        console.log("unAuthenticated")
         return authContext.setUserHandler(false);
       }
 
       authContext.setUserHandler(response.data);
     })()
-  }, []);
+  }, [authContext.token]);
 
-  if (isLoading) {
+  useEffect(() => {
+    if (isLoading) return;
+    if (pageProps.protected && !authContext.user) {
+      console.log("redirecting", router)
+      router.push("/login?from=" + encodeURIComponent(router.asPath));
+    }
+  }, [isLoading])
+
+  if (isLoading || (pageProps.protected && !authContext.user)) {
     return <Loading />
-  }
-
-  if (pageProps.protected && !authContext.user) {
-    router.push("/login")
-    return <></>
   }
 
   return (<>
