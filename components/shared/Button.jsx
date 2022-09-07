@@ -20,7 +20,7 @@ Button({
   }
   return <>
     <button className={`${className} d-flex align-items-center btn ${color} mt-3`} onClick={onClick} style={{fontSize: "1.1rem"}}>
-      <Icon className="me-1"/>
+      {Icon && <Icon className="me-1"/>}
       {label}
     </button>
   </>
