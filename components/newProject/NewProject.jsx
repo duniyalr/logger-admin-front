@@ -3,12 +3,19 @@ import CommonContainer from "../shared/CommonContainer"
 import Input from "../shared/Input";
 import Button from "../shared/Button";
 import { httpCreateProject } from "../../http/createProject";
+import HttpError from "../../http/HttpError";
+import { useRouter } from "next/router";
 export default function
 NewProject() {
+  const router = useRouter();
   const { register, handleSubmit, formState: {errors}} = useForm();
   const onSubmit = async (formData) => {
     const response = await httpCreateProject(formData);
-    console.log(response);
+    if (response instanceof HttpError) {
+      return;
+    }
+
+    return router.push("/project/" + response.data.id);
   }
 
   return (<>
