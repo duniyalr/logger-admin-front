@@ -7,11 +7,13 @@ import { useEffect, useState } from "react";
 import s from "./project.module.scss";
 import useSWR from "swr";
 import { basicFetcher } from "../../http/fetchers/basicFetcher";
+import { FaBatteryEmpty } from "react-icons/fa";
 export default function
 Project({
   initialData,
   initialRequest
 }) {
+  console.log(initialData)
   const [project, setProject] = useState(initialData.data);
   const [sections, setSections] = useState(null);
   const router = useRouter();
@@ -51,11 +53,11 @@ Project({
               </div>
               <div className={`${s.item} d-flex align-items-center`}>
                 <span className="w-50 py-3" style={{fontWeight: "bold"}}>Created At </span> 
-                <span className="w-50">{(new Date(project.createdAt)).toLocaleString()}</span>
+                <span className="w-50"  style={{fontSize: ".8rem"}}>{(new Date(project.createdAt)).toLocaleString()}</span>
               </div>
               <div className={`${s.item} d-flex align-items-center`}>
                 <span className="w-50 py-3" style={{fontWeight: "bold"}}>Updated At </span> 
-                <span className="w-50">{(new Date(project.updatedAt)).toLocaleString()}</span>
+                <span className="w-50"  style={{fontSize: ".8rem"}}>{(new Date(project.updatedAt)).toLocaleString()}</span>
               </div>
             </div>
 
@@ -65,22 +67,28 @@ Project({
                 (sections && sections.length)
                 ?
                 <>
-                  {sections.map(section => (<>
-                    <div className="d-flex align-items-center">
+                  {sections.map((section, i) => (<>
+                    <div className="d-flex align-items-center" key={i}>
                       <span className="w-50 py-3">{section.name}</span>
-                      <span className="w-25 py-3">{(new Date(section.createdAt)).toLocaleDateString()}</span>
+                      <span className="w-25 py-3 text-secondary"  style={{fontSize: ".8rem"}}>{(new Date(section.createdAt)).toLocaleString()}</span>
                       <span className="w-25 text-center">
                         <LinkButton
                         href={`/logs?sectionId=${section.id}`}
-                        label={"logs"}
+                        label={"Logs"}
                         color={"btn-primary"}
+                        style={{fontSize: ".9rem"}}
                         />
                       </span>
                     </div>
                   </>))}
                 </>
                 :
-                <></>
+                <>
+                  <div className="w-100 text-center d-flex flex-column align-items-center text-secondary">
+                    <FaBatteryEmpty className="mb-3 " style={{fontSize: "7rem"}}/>
+                    No section found for this project!
+                  </div>
+                </>
               }
             </div>
           </div>

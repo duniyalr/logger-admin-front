@@ -5,11 +5,12 @@ LinkButton({
   label,
   Icon,
   href,
-  color = "text-primary"
+  color = "text-primary",
+  style
 }) {
   return (<>
     <Link href={href}>
-      <a className={`text-decoration-none justify-self-end ${color}`} style={{gap: "10px"}}>
+      <a className={`text-decoration-none justify-self-end btn ${color}`} style={style} >
         {Icon && <Icon className={"me-2"} />}
         <span>{label}</span>
       </a>

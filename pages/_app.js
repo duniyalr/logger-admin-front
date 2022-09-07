@@ -6,6 +6,7 @@ import Menu from "../components/layout/menu/Menu";
 import { useRouter } from "next/router";
 import { SWRConfig } from "swr";
 import { basicFetcher } from "../http/fetchers/basicFetcher";
+import AppBody from "./_appBody";
 
 export default function 
 MyApp({ Component, pageProps }) {
@@ -16,20 +17,22 @@ MyApp({ Component, pageProps }) {
         fetcher:{basicFetcher}
       }}>
         <AuthProvider>
-          <div className="body container-fluid">
-          {router.route === "/login" 
-            ? 
-            <Component {...pageProps} />
-            :
-            <>
-              <Topbar />
-              <div className="row">
-                <Menu />
-                <Component {...pageProps} />
-              </div>
-            </>
-          }
-          </div>
+          <AppBody pageProps={pageProps}>
+            <div className="body container-fluid">
+            {router.route === "/login" 
+              ? 
+              <Component {...pageProps} />
+              :
+              <>
+                <Topbar />
+                <div className="row">
+                  <Menu />
+                  <Component {...pageProps} />
+                </div>
+              </>
+            }
+            </div>
+          </AppBody>
         </AuthProvider>
       </SWRConfig>
   </>

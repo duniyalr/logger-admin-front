@@ -1,10 +1,14 @@
 import { fetchWithSession } from "../../helpers/fetchWithSession";
 import { qoToqs } from "../../helpers/queryObjectToQueryString";
 import Projects from "../../components/projects/Projects";
+import { useAuthContext } from "../../store/authContext";
+import { useRouter } from "next/router";
+
 export default function ProjectsPage({
   initialData,
   initialRequest
 }) {
+
   return (<>
     <Projects 
     initialData={initialData}
@@ -19,6 +23,7 @@ export const getServerSideProps = async ({req, query}) => {
 
   return {
     props: {
+      protected: true,
       initialRequest: {
         key: requestKey,
         query: query

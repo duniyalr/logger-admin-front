@@ -13,12 +13,11 @@ export const AuthProvider = ({
   children
 }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [token, setToken] = useState(null);
+  const [token, setToken] = useState();
   const [user, setUser] = useState(null);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
-    console.log("setting session")
     const session = window.localStorage.getItem("session");
     if (session) {
       setAxios(session);
