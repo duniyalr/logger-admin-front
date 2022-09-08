@@ -19,7 +19,7 @@ NewSection() {
       return;
     }
     console.log(response)
-    // return router.push("/project/" + router.query);
+    return router.push("/section/" + response.data.id);
   }
 
   return (<>

@@ -148,7 +148,7 @@ Logs({
 
         <div className="w-100"></div>
 
-        <div className={`d-flex align-items-center flex-grow-1 ${query.projectId && "me-4"}`}>
+        <div className={`d-flex align-items-center`} style={{width: "46%", marginRight: "8%"}}>
           <span className="me-2 text-secondary">Project</span>
           <ListPopupTrigger value={query.projectId} onClear={selectProjectIdClearHandler} 
               onClick={() => setProjectSelectPopupOpenHandler(true)}/>
@@ -177,7 +177,7 @@ Logs({
         {
           query.projectId && 
           <>
-            <div className="d-flex align-items-center flex-grow-1">
+            <div className="d-flex align-items-center" style={{width: "46%"}}>
               <span className="me-2 text-secondary">Section</span>
 
             <ListPopupTrigger value={query.sectionId} onClear={selectSectionIdClearHandler} 

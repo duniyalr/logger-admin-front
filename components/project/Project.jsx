@@ -118,8 +118,8 @@ Project({
                       <span className="w-25 py-3 text-secondary"  style={{fontSize: ".8rem"}}>{(new Date(section.createdAt)).toLocaleString()}</span>
                       <span className="w-25 text-center">
                         <LinkButton
-                        href={`/logs?sectionId=${section.id}`}
-                        label={"Logs"}
+                        href={`/section/${section.id}`}
+                        label={"View"}
                         color={"btn-primary"}
                         style={{fontSize: ".9rem"}}
                         />

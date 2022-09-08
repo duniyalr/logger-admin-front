@@ -19,7 +19,8 @@ CustomPopup({
       background: "rgba(0,0,0,.2)"
     }}
     contentStyle={{
-      width: "40%"
+      width: "40%",
+      boxShadow: "0 0 15px rgba(0,0,0,.2)"
     }}
     {...args}
     >

@@ -10,7 +10,7 @@ ProjectPage({
 }
 
 export const getServerSideProps = async ({params, req, query}) => {
-  const requestKey = "/api/project/" + params.projectId + "?" + qoToqs(query);
+  const requestKey = "/api/project/" + params.projectId + qoToqs(query);
   const data = await fetchWithSession(requestKey, req);
   console.log(data)
   return {
