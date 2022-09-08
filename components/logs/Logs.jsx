@@ -40,6 +40,7 @@ Logs({
 }) {
   const router = useRouter();
   const [projectSelectPopupOpen, setProjectSelectPopupOpen] = useState(false);
+  const [sectionSelectPopupOpen, setSectionSelectPopupOpen] = useState(false);
   const [query, setQuery] = useState(router.query);
   const [logsUrl, setlogsUrl] = useState(null);
   const { data, error, isLoading} = useSWR(logsUrl, basicFetcher, {
@@ -48,10 +49,14 @@ Logs({
   });
   const [projectsUrl, setProjectsUrl] = useState(null);
   const {data: projectsData, error:projectsError, isLoading:projectsIsLoading} = useSWR(projectsUrl, basicFetcher);
+  const [sectionsUrl, setSectionsUrl] = useState(null);
+  const {data: sectionsData, error:sectionsError, isLoading:sectionsIsLoading} = useSWR(sectionsUrl, basicFetcher);
   const items = data.data.items;
   const meta = data.data.meta;
 
   const projects = projectsData && projectsData.data.items;
+  const sections = sectionsData && sectionsData.data.items;
+
   console.log("query", query)
   const setQueryHandler = (key, value) => {
     return setQuery({
@@ -69,16 +74,34 @@ Logs({
   }
 
   const selectProjectIdClearHandler = () => {
-    const {projectId, ..._query} = query;
+    const {projectId, sectionId, ..._query} = query;
     setProjectSelectPopupOpen(false);
     setQuery(_query)
   }
 
   const setProjectSelectPopupOpenHandler = (_open) => {
+    console.log("here", _open)
     if (_open) {
       projectSelectOpenHandler();
     }
     setProjectSelectPopupOpen(_open);
+  }
+
+  const sectionSelectOpenHandler = () => {
+    setSectionsUrl("/api/section/index?sortBy=createdAt&sortOrder=DESC&take=50&page=1&projectId=" + query.projectId);
+  }
+
+  const selectSectionIdClearHandler = () => {
+    const {sectionId, ..._query} = query;
+    setSectionSelectPopupOpen(false);
+    setQuery(_query)
+  }
+
+  const setSectionSelectPopupOpenHandler = (_open) => {
+    if (_open) {
+      sectionSelectOpenHandler();
+    }
+    setSectionSelectPopupOpen(_open);
   }
 
   useEffect(() => {
@@ -125,29 +148,62 @@ Logs({
 
         <div className="w-100"></div>
 
-        <div className="d-flex w-25">
+        <div className={`d-flex align-items-center flex-grow-1 ${query.projectId && "me-4"}`}>
+          <span className="me-2 text-secondary">Project</span>
           <ListPopupTrigger value={query.projectId} onClear={selectProjectIdClearHandler} 
-          onClick={() => setProjectSelectPopupOpenHandler(true)}/>
-          <CustomPopup
-            open={projectSelectPopupOpen}
-            onClose={() => setProjectSelectPopupOpenHandler(false)}
-            title={"Project Select"}
-            body={
-              <>
-                {projects && projects.map(project=> {
-                  return (<>
-                    <PopupListItem onClick={() => {
-                    setQueryHandler("projectId", project.id);
-                    setProjectSelectPopupOpenHandler(false);
-                    }}
-                    item={project}
-                    />
-                  </>)
-                })}
-              </>
-            }
-          />
+              onClick={() => setProjectSelectPopupOpenHandler(true)}/>
+              <CustomPopup
+                open={projectSelectPopupOpen}
+                onClose={() => setProjectSelectPopupOpenHandler(false)}
+                title={"Project Select"}
+                body={
+                  <>
+                    {projects && projects.map(project=> {
+                      return (<>
+                        <PopupListItem onClick={() => {
+                        setQueryHandler("projectId", project.id);
+                        setProjectSelectPopupOpenHandler(false);
+                        }}
+                        item={project}
+                        />
+                      </>)
+                    })}
+                  </>
+                }
+              />
         </div>
+
+
+        {
+          query.projectId && 
+          <>
+            <div className="d-flex align-items-center flex-grow-1">
+              <span className="me-2 text-secondary">Section</span>
+
+            <ListPopupTrigger value={query.sectionId} onClear={selectSectionIdClearHandler} 
+            onClick={() => setSectionSelectPopupOpenHandler(true)}/>
+            <CustomPopup
+              open={sectionSelectPopupOpen}
+              onClose={() => setSectionSelectPopupOpenHandler(false)}
+              title={"Section Select"}
+              body={
+                <>
+                  {sections && sections.map(section=> {
+                    return (<>
+                      <PopupListItem onClick={() => {
+                      setQueryHandler("sectionId", section.id);
+                      setSectionSelectPopupOpenHandler(false);
+                      }}
+                      item={section}
+                      />
+                    </>)
+                  })}
+                </>
+              }
+            />
+            </div>
+          </>
+        }
         
       </div>
       <hr />
