@@ -1,7 +1,7 @@
 import s from "./menu.module.scss";
 import Link from "next/link";
 import { RiDashboardFill } from "react-icons/ri";
-
+import { IoLogoBuffer } from "react-icons/io"
 export default function
 Menu() {
   return (<>
@@ -13,7 +13,12 @@ Menu() {
               Projects
             </a>
         </Link>
-
+        <Link href={"/logs"}>
+            <a className="p-3 text-secondary">
+              <IoLogoBuffer className="d-inline-block me-1" style={{fontSize: "24px"}}/>
+              Logs
+            </a>
+        </Link>
       </div>
     </div>
   </>)

@@ -27,7 +27,7 @@ Login() {
     const data = response.data;
     authContext.setTokenHandler(data.session);
     window.localStorage.setItem("session", data.session);
-    window.location = router.query.from
+    window.location = router.query.from ? router.query.from : "/dashboard";
   }
 
   return (<>
