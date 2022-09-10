@@ -1,7 +1,8 @@
 import s from "./menu.module.scss";
 import Link from "next/link";
 import { RiDashboardFill } from "react-icons/ri";
-import { IoLogoBuffer } from "react-icons/io"
+import { IoLogoBuffer } from "react-icons/io";
+import { TbSection } from "react-icons/tb";
 export default function
 Menu() {
   return (<>
@@ -11,6 +12,12 @@ Menu() {
             <a className="p-3 text-secondary">
               <RiDashboardFill className="d-inline-block me-1" style={{fontSize: "24px"}}/>
               Projects
+            </a>
+        </Link>
+        <Link href={"/sections"}>
+            <a className="p-3 text-secondary">
+              <TbSection  className="d-inline-block me-1" style={{fontSize: "24px"}}/>
+              Sections
             </a>
         </Link>
         <Link href={"/logs"}>
