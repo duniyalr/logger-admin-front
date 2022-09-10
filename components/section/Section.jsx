@@ -6,7 +6,9 @@ import { basicFetcher } from "../../http/fetchers/basicFetcher";
 import HttpError from "../../http/HttpError";
 import CommonContainer from "../shared/CommonContainer";
 import Button from "../shared/Button";
-import { FaTrash, FaTimes } from "react-icons/fa";
+import { FaTrash, FaTimes, FaPlus } from "react-icons/fa";
+import { httpCreateSectionSession } from "../../http/createSectionSession";
+import { httpDeleteSectionSessoin } from "../../http/deleteSectionSession";
 export default function
 Section({
   initialData,
@@ -16,7 +18,11 @@ Section({
   const section = initialData.data;
   const project = section.project;
   
+  const {data: sessionsData, mutate: sessionMutate } = useSWR("/api/section/session/index?sectionId=" + section.id, basicFetcher);
+  const sessions = sessionsData.data.items;
   const [confirmDelete, setConfirmDelete] = useState(false);
+
+  const [confirmSessionDeleteId, setConfirmSessionDeleteId] = useState(null);
 
   const deleteSectionHandler = async () => {
     const result = await httpDeleteSection({sectionId: section.id});
@@ -28,7 +34,35 @@ Section({
 
     router.push("/project/" + project.id);
   }
+
+  const deleteSessionHandler = async  () => {
+    if (!confirmSessionDeleteId) return;
+
+    const result = await httpDeleteSectionSessoin({
+      sessionId: confirmSessionDeleteId
+    });
+
+    if (result instanceof HttpError) {
+      return;
+    } 
+
+    sessionMutate()
+  }
  
+  const generateSessionHandler = async () => {
+    const result = await httpCreateSectionSession({
+      sectionId: section.id
+    });
+
+    if (result instanceof HttpError) {
+      console.log(result)
+      return
+    }
+    console.log(result)
+
+    sessionMutate();
+  }
+
   return(<>
       <CommonContainer>
       <div className={`actionbar d-flex align-items-center mb-4`}>
@@ -86,6 +120,54 @@ Section({
         </div>
       </div>
       <hr />
+      <div className="container-fluid">
+        <div className="d-flex align-items-center">
+          <h3 className="flex-grow-1">Sessions</h3>
+          <Button
+          label={"Generate Session"}
+          Icon={FaPlus}
+          className="text-primary"
+          onClick={generateSessionHandler}
+        />
+        </div>
+        <hr />
+
+        <div className="container-fluid">
+          {sessions.map(session => {
+            return (<>
+              <div className="row py-3 align-items-center">
+                <div className="col-md-6 text-secondary" style={{wordWrap: "break-word", fontSize: "12px"}}>{session.session}</div>
+                <div className="col-md-3 text-secondary" >{(new Date(session.createdAt)).toLocaleString()}</div>
+                <div className="col-md-3">
+                {
+                  confirmSessionDeleteId === session.id
+                  ? 
+                  <div className="btn-group">
+                  <Button
+                    label={"Are you Sure?"}
+                    color="btn-danger"
+                    onClick={deleteSessionHandler}
+                  />
+                  <Button
+                    color="btn-danger"
+                    Icon={FaTimes}
+                    onClick={() => setConfirmSessionDeleteId(null)}
+                  />
+                  </div>
+                  :
+                  <Button
+                  label={"Delete"}
+                  Icon={FaTrash}
+                  color="text-danger"
+                  onClick={() => setConfirmSessionDeleteId(session.id)}
+                  />
+                }
+                </div>
+              </div>
+            </>)
+          })}
+        </div>
+      </div>
       </CommonContainer>
   </>)
 }
