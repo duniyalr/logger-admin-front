@@ -216,7 +216,7 @@ Logs({
               <div className="col-md-2 text-break text-secondary" style={{fontSize: ".8rem"}}>{(new Date(item.createdAt)).toLocaleString()}</div>
               <div className="col-md-2 text-break text-secondary" style={{fontSize: ".8rem"}}>{item.contentType}</div>
               <div className="col-md-1 text-break text-center">
-                <Link href={`/project/${item.id}`}>
+                <Link href={`/log/${item.id}`}>
                   <a className="text-decoration-none text-white btn btn-primary" style={{fontSize: ".9rem"}}>
 
                     View
